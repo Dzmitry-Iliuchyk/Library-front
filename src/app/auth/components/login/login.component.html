@@ -1,0 +1,39 @@
+<div class="auth-page">
+    <div class="container page">
+        <div class="row">
+            <div class="col-md-6 offset-md-3 col-12">
+                <h1 class="text-center">Sign In</h1>
+                <p class="text-center">
+                    <a href="/register">Need an account?</a>
+                </p>
+                <Lib-backend-errors [BackendErrors]="backendErrors$|async"></Lib-backend-errors>
+                <form (submit)="onSubmit()" [formGroup]="form">
+                    <fieldset>
+                        <fieldset class="mb-3">
+                            <input
+                                class="form-control form-control-lg"
+                                type="email"
+                                placeholder="Email"
+                                formControlName="email"
+                            />
+                        </fieldset>
+                        <fieldset class="mb-3">
+                            <input
+                                class="form-control form-control-lg"
+                                type="password"
+                                placeholder="Password"
+                                formControlName="password"
+                            />
+                        </fieldset>
+                        <button
+                            type="submit"
+                            class="btn btn-primary btn-lg w-100"
+                        >
+                            Sign In
+                        </button>
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

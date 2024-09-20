@@ -1,0 +1,45 @@
+<lib-loading *ngIf="isLoading$ | async"></lib-loading>
+<Lib-backend-errors
+  *ngIf="error$ | async"
+  [BackendErrors]="error$ | async"
+></Lib-backend-errors>
+<div *ngIf="booksData$ | async">
+  <ng-template ngFor let-book [ngForOf]="(booksData$ | async).books">
+    <div class="container mt-5">
+      <div class="card">
+        <div class="no-gutters row justify-content-md-center">
+          <div class="col-2">
+            <img
+              [src]="getImage((book).image)"
+              class="card-img"
+              alt="Image"
+            />
+          </div>
+          <div class="col-8">
+            <div class="card-body">
+              <h5 class="card-title">Card Title</h5>
+              <p class="card-text">
+                This is a brief description of the card content. You can add
+                more details here.
+              </p>
+              <p class="card-text">
+                <small class="text-muted">Last updated 3 mins ago</small>
+              </p>
+            </div>
+          </div>
+          <div class="col-2">
+            <div class="card-body">
+              <button class="btn btn-primary">Click me</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+  <lib-pagination
+    [total]="(booksData$ | async).total"
+    [limit]="limit"
+    [url]="baseUrl"
+    [currentPage]="currentPage"
+  ></lib-pagination>
+</div>
