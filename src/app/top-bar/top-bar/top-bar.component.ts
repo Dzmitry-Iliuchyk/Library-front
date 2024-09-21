@@ -19,7 +19,7 @@ export class TopBarComponent implements OnInit {
   ngOnInit(): void {
     this.isLoggedIn$ = this.store.pipe(select(IsLoggedInSelector));
     this.isAnonymous$ = this.store.pipe(select(IsAnonymousSelector));
-    this.isAnonymous$ = this.store.pipe(select(isAdminSelector));
+    this.isAdmin$ = this.store.pipe(select(isAdminSelector));
     this.currentUser$ = this.store.pipe(
       select(CurrentUserSelector)
     );

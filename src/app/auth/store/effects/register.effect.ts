@@ -12,6 +12,7 @@ import { BackEndErrors } from '../../../shared/types/BackEndErrors.interface';
 import { Action } from '@ngrx/store';
 import { Router } from '@angular/router';
 import { getCurrentUserAction } from '../actions/getCurrentUser.actions';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Injectable()
@@ -31,8 +32,8 @@ export class RegisterEffect {
             console.log(a);
             return registerSuccessAction();
           }),
-          catchError((backEndErrors: BackEndErrors) => {
-            return of(registerFailureAction({ errors: backEndErrors }));
+          catchError((backEndErrors: HttpErrorResponse) => {
+            return of(registerFailureAction({ errors: backEndErrors.error }));
           })
         );
       })

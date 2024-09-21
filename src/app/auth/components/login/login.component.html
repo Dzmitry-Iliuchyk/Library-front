@@ -6,7 +6,7 @@
                 <p class="text-center">
                     <a href="/register">Need an account?</a>
                 </p>
-                <Lib-backend-errors [BackendErrors]="backendErrors$|async"></Lib-backend-errors>
+                <Lib-backend-errors *ngIf="backendErrors$|async" [BackendErrors]="backendErrors$|async"></Lib-backend-errors>
                 <form (submit)="onSubmit()" [formGroup]="form">
                     <fieldset>
                         <fieldset class="mb-3">

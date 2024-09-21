@@ -21,7 +21,6 @@ export class LogOutEffect {
           this.authService.logout();
           this.router.navigateByUrl('/');
         })
-      ),
-    { dispatch: false }
+      )
   );
 }

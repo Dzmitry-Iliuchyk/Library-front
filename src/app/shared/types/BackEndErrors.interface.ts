@@ -4,6 +4,10 @@ export interface BackEndErrors{
     messages: string[];
 }
 
+// export interface Errors{
+//     [key: string]: string[];
+// }
+
 // {
 //     "name": "ValidationException",
 //     "status": 400,

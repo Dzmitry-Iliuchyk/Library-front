@@ -10,15 +10,17 @@ import { ActivatedRoute, Params, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
-import { BooksResponse } from '../../types/booksResponce';
+import { Book, BooksResponse } from '../../types/booksResponce';
 import { BooksRequest } from '../../types/BooksRequest.intrface';
-import { BackEndErrors } from '../../../types/BackEndErrors.interface';
+import { BackEndErrors} from '../../../types/BackEndErrors.interface';
 import {
+  booksCountSelector,
   booksSelector,
   errorsSelector,
   isLoadingSelector,
 } from '../../store/selectors';
 import { getBooksAction } from '../../store/actions/getBooks.actions';
+import { IsLoggedInSelector } from '../../../../auth/store/selectors';
 
 @Component({
   selector: 'lib-books',
@@ -30,9 +32,11 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
   @Input('titleFilter') titleFilterProps: string;
   @Input('authorFilter') authorFilterProps: string;
 
+  isLoggedIn$: Observable<boolean>;
   isLoading$: Observable<boolean>;
   error$: Observable<BackEndErrors | null>;
-  booksData$: Observable<BooksResponse | null>;
+  booksData$: Observable<Book[] | null>;
+  count$: Observable<number|null>
   limit = environment.limit;
   baseUrl: string;
   currentPage: number;
@@ -47,11 +51,33 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
     this.queryParamsSubscribtion.unsubscribe();
   }
   ngOnChanges(changes: SimpleChanges): void {
-    const isChanged =
-      changes['apiUrlProps'].currentValue !==
-      changes['apiUrlProps'].previousValue;
-    const isFirstChange = changes['apiUrlProps'].isFirstChange();
-    if (isChanged && !isFirstChange) {
+    let isChanged = false;
+    if (changes['titleFilterProps']&& !changes['titleFilterProps'].isFirstChange()) {
+      isChanged = true;
+      this.onFiltersChanged();
+      console.log(
+        'titleFilterProps изменился на:',
+        changes['titleFilterProps'].currentValue
+      );
+    }
+    if (changes['authorFilterProps']&& !changes['authorFilterProps'].isFirstChange()) {
+      isChanged = true;
+      this.onFiltersChanged();
+      console.log(
+        'authorFilterProps изменился на:',
+        changes['authorFilterProps'].currentValue
+      );
+    }
+    if (changes['apiUrlProps'] && !changes['apiUrlProps'].isFirstChange()) {
+      const isApiChanged =
+        changes['apiUrlProps'].currentValue !==
+        changes['apiUrlProps'].previousValue;
+      if (isApiChanged) {
+        isChanged = true;
+      }
+    }
+    if(isChanged){
+      console.log("OnChanges", changes)
       this.fetchBooks();
     }
   }
@@ -68,6 +94,7 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
       authorFilter: this.authorFilterProps,
       titleFilter: this.titleFilterProps,
     };
+    console.log('fetchBook', request, this.apiUrlProps);
     this.store.dispatch(
       getBooksAction({ url: this.apiUrlProps, request: request })
     );
@@ -81,21 +108,20 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
     );
   }
   initializeValues() {
+    this.count$ = this.store.pipe(select(booksCountSelector));
     this.isLoading$ = this.store.pipe(select(isLoadingSelector));
+    this.isLoggedIn$ = this.store.pipe(select(IsLoggedInSelector));
     this.error$ = this.store.pipe(select(errorsSelector));
     this.booksData$ = this.store.pipe(select(booksSelector));
     this.baseUrl = this.router.url.split('?')[0];
   }
-  getImage(byteArray: Uint8Array): string {
-    return 'data:image/png;base64,' + this.byteArrayToBase64(byteArray);
+  getImage(base64stringImage: any): string {
+    const imgSrc = `data:image/png;base64,${base64stringImage}`;
+    //console.log("getImage", imgSrc)
+    return imgSrc;
   }
-
-  byteArrayToBase64(byteArray: Uint8Array): string {
-    let binary = '';
-    const len = byteArray.byteLength;
-    for (let i = 0; i < len; i++) {
-      binary += String.fromCharCode(byteArray[i]);
-    }
-    return window.btoa(binary);
+  onFiltersChanged(){
+    this.currentPage = 1;
+    this.router.navigate(['/']);
   }
 }

@@ -12,6 +12,5 @@ export const loginByRefreshSuccessAction = createAction(
 );
 
 export const loginByRefreshFailureAction = createAction(
-  ActionTypes.LOGIN_BY_REFRESH_FAILURE,
-  props<{ errors: BackEndErrors; }>()
+  ActionTypes.LOGIN_BY_REFRESH_FAILURE
 );

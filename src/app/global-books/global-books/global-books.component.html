@@ -1,12 +1,13 @@
 <div class="container mt-5">
     <!-- banner -->
     <div class="row mb-3">
-        <div class="col-md-6">
+        <div class="col-md-5">
             <input type="text" class="form-control" id="filterTitle" placeholder="Фильтр по названию" [(ngModel)]="filterTitle">
         </div>
-        <div class="col-md-6">
+        <div class="col-md-5">
             <input type="text" class="form-control" id="filterAuthor" placeholder="Фильтр по автору" [(ngModel)]="filterAuthor">
         </div>
+        <button class="col-md-2 btn btn-primary" (click)="onSubmit()"> Применить </button>
     </div>
-    <!-- books -->
+    <lib-books [apiUrl]="routeProps" [authorFilter]="filterAuthorOut" [titleFilter]="filterTitleOut"></lib-books>
 </div>

@@ -20,9 +20,9 @@ export class LoginEffect {
           map(() => {
             return loginSuccessAction();
           }),
-          catchError((errorResponse: BackEndErrors) => {
+          catchError((errorResponse: HttpErrorResponse) => {
             return of(
-              loginFailureAction({errors: errorResponse})
+              loginFailureAction({errors: errorResponse.error})
             );
           })
         );

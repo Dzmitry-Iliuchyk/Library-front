@@ -31,5 +31,5 @@ export const CurrentUserSelector = createSelector(
 
 export const isAdminSelector = createSelector(
   authFeatureSelector,
-  (authState: AuthState) => authState.currentUser.isAdmin
+  (authState: AuthState) => authState.isAdmin
 );

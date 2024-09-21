@@ -4,42 +4,48 @@
   [BackendErrors]="error$ | async"
 ></Lib-backend-errors>
 <div *ngIf="booksData$ | async">
-  <ng-template ngFor let-book [ngForOf]="(booksData$ | async).books">
+  <ng-template ngFor let-book [ngForOf]="(booksData$ | async)">
     <div class="container mt-5">
-      <div class="card">
+      <div class="row justify-content-md-center"><div class="card col-md-9">
         <div class="no-gutters row justify-content-md-center">
-          <div class="col-2">
+          <div class="col-md-3">
             <img
               [src]="getImage((book).image)"
-              class="card-img"
+              class="card-img img-fluid"
               alt="Image"
             />
           </div>
-          <div class="col-8">
+          <div class="col-md-7">
             <div class="card-body">
-              <h5 class="card-title">Card Title</h5>
-              <p class="card-text">
-                This is a brief description of the card content. You can add
-                more details here.
+              <h5 class="card-title">{{book.title}}</h5>
+              <p class="card-text truncate" >
+                {{book.description}}
               </p>
               <p class="card-text">
-                <small class="text-muted">Last updated 3 mins ago</small>
+                <small class="text-muted">{{book.firstName }} {{book.lastName}}</small>
               </p>
             </div>
           </div>
-          <div class="col-2">
+          <div class="col-md-2">
             <div class="card-body">
-              <button class="btn btn-primary">Click me</button>
+              <button *ngIf="isLoggedIn$|async" [disabled]="book.isTaken" class="btn btn-primary">{{book.isTaken?"Нет в наличии":"Взять"}}</button>
             </div>
           </div>
         </div>
-      </div>
+      </div></div>
     </div>
   </ng-template>
   <lib-pagination
-    [total]="(booksData$ | async).total"
+    [total]="(count$ | async)"
     [limit]="limit"
     [url]="baseUrl"
     [currentPage]="currentPage"
   ></lib-pagination>
+</div>
+<div class="row justify-content-md-center" *ngIf="!(count$|async)">
+  <div class="col-md-6">
+    <p>
+      К сожалению, по вашему запросу ничего не найдено!
+    </p>
+  </div>
 </div>

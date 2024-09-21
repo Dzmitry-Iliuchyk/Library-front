@@ -23,8 +23,8 @@ export class LoginByRefreshEffect {
           map(() => {
             return loginByRefreshSuccessAction();
           }),
-          catchError((errorResponse: BackEndErrors) => {
-            return of(loginByRefreshFailureAction({ errors: errorResponse }));
+          catchError(() => {
+            return of(loginByRefreshFailureAction());
           })
         );
       })

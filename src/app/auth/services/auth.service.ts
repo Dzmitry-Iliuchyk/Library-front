@@ -29,12 +29,12 @@ export class AuthService {
 
   logout(): Observable<any> {
     const url = environment.apiURL + '/User/Logout';
-    return this.http.post<any>(url, {});
+    return this.http.post<any>(url, {}, { withCredentials: true });
   }
 
   getCurrentUser(userId :string): Observable<CurrentUser> {
     const url = environment.apiURL + '/User'+`/${userId}`+ '/Get';
-    return this.http.get<GetUserResponse>(url);
+    return this.http.get<GetUserResponse>(url, { withCredentials: true });
   }
 
 }

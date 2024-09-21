@@ -22,6 +22,7 @@
     "@ngrx/router-store": "^17.1.0",
     "@ngrx/store": "^17.1.0",
     "@ngrx/store-devtools": "^17.1.0",
+    "bootstrap": "^5.3.3",
     "eslint": "^8.56.0",
     "jwt-decode": "^4.0.0",
     "ngx-cookie-service": "^17.0.0",

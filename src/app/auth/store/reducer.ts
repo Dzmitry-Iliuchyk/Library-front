@@ -12,6 +12,7 @@ const initialState: AuthState = {
     isLoggedIn: null,
     validationErrors: null,
     isLoading: false,
+    isAdmin: false
   };
   
   export const authReducer = createReducer(
@@ -26,10 +27,11 @@ const initialState: AuthState = {
     ),
     on(
       registerSuccessAction,
-      (state): AuthState => ({
+      (state, action): AuthState => ({
         ...state,
         isSubmitting: false,
         isLoggedIn: true,
+        
       })
     ),
     on(
@@ -72,12 +74,14 @@ const initialState: AuthState = {
       isLoading: false,
       isLoggedIn: true,
       currentUser: action.currentUser,
+      isAdmin: action.currentUser.isAdmin
     })),
     on(getCurrentUserFailureAction, (state) => ({
       ...state,
       isLoading: false,
       currentUser: null,
       isLoggedIn: false,
+      isAdmin: false
     })),
     on(
       logOutAction,
@@ -106,7 +110,6 @@ const initialState: AuthState = {
       ...state,
       isSubmitting: false,
       isLoggedIn: false,
-      validationErrors: action.errors,
     })),
   );
   

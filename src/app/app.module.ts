@@ -10,6 +10,7 @@ import { StoreModule } from '@ngrx/store';
 import { Actions, EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterEffect } from './auth/store/effects/register.effect';
+import { BodyModule } from './body/body.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +30,7 @@ import { RegisterEffect } from './auth/store/effects/register.effect';
     EffectsModule.forRoot([]),
     TopBarModule,
     AuthModule,
+    BodyModule,
     StoreRouterConnectingModule.forRoot(),
   ],
 
