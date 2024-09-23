@@ -7,11 +7,11 @@ import { BooksResponse } from '../types/booksResponce';
 import { environment } from '../../../../environments/environment';
 
 @Injectable()
-export class BookService {
+export class BooksService {
   constructor(private http: HttpClient) {}
   getBooks(url: string , request: BooksRequest): Observable<BooksResponse> {
     const apiUrl: string = environment.apiURL + url;
     console.log("BookService", apiUrl)
-    return this.http.post<BooksResponse>(apiUrl, request);
+    return this.http.post<BooksResponse>(apiUrl, request, { withCredentials: true });
   }
 }

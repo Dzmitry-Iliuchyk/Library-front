@@ -33,3 +33,8 @@ export const isAdminSelector = createSelector(
   authFeatureSelector,
   (authState: AuthState) => authState.isAdmin
 );
+
+export const currentUserIdSelector = createSelector(
+  authFeatureSelector,
+  (authState: AuthState) => authState.currentUser.guid
+);

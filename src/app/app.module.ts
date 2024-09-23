@@ -11,6 +11,8 @@ import { Actions, EffectsModule } from '@ngrx/effects';
 import { HttpClientModule } from '@angular/common/http';
 import { RegisterEffect } from './auth/store/effects/register.effect';
 import { BodyModule } from './body/body.module';
+import { UserBooksModule } from './user-books/user-books.module';
+import { BookModule } from './shared/book/book.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -31,6 +33,8 @@ import { BodyModule } from './body/body.module';
     TopBarModule,
     AuthModule,
     BodyModule,
+    UserBooksModule,
+    BookModule,
     StoreRouterConnectingModule.forRoot(),
   ],
 

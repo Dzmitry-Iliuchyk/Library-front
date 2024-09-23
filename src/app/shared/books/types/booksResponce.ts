@@ -13,4 +13,6 @@ export interface Book {
   lastName: string;
   image: Uint8Array;
   isTaken: boolean;
+  clientId: string;
+  username: string;
 }

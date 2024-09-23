@@ -109,6 +109,7 @@ const initialState: AuthState = {
     on(loginByRefreshFailureAction, (state, action) => ({
       ...state,
       isSubmitting: false,
+      currentUser: null,
       isLoggedIn: false,
     })),
   );

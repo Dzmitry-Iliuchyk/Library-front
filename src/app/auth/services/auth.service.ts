@@ -14,12 +14,12 @@ export class AuthService {
 
   register(data: RegisterRequest): Observable<void> {
     const url = environment.apiURL + '/User/Register';
-    return this.http.post<void>(url, data);
+    return this.http.post<void>(url, data, { withCredentials: true });
   }
 
   login(data: LoginRequest): Observable<any> {
     const url = environment.apiURL + '/User/Login';
-    return this.http.post<any>(url, data);
+    return this.http.post<any>(url, data, { withCredentials: true });
   }
 
   loginByRefresh(): Observable<any> {
@@ -32,8 +32,8 @@ export class AuthService {
     return this.http.post<any>(url, {}, { withCredentials: true });
   }
 
-  getCurrentUser(userId :string): Observable<CurrentUser> {
-    const url = environment.apiURL + '/User'+`/${userId}`+ '/Get';
+  getCurrentUser(): Observable<CurrentUser> {
+    const url = environment.apiURL + '/User/Get';
     return this.http.get<GetUserResponse>(url, { withCredentials: true });
   }
 

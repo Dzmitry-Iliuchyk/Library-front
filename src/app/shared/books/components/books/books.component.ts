@@ -8,7 +8,7 @@ import {
 } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { select, Store } from '@ngrx/store';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, tap } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { Book, BooksResponse } from '../../types/booksResponce';
 import { BooksRequest } from '../../types/BooksRequest.intrface';
@@ -20,7 +20,8 @@ import {
   isLoadingSelector,
 } from '../../store/selectors';
 import { getBooksAction } from '../../store/actions/getBooks.actions';
-import { IsLoggedInSelector } from '../../../../auth/store/selectors';
+import { currentUserIdSelector, IsLoggedInSelector } from '../../../../auth/store/selectors';
+import { BookService } from '../../../services/book.service';
 
 @Component({
   selector: 'lib-books',
@@ -31,7 +32,8 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
   @Input('apiUrl') apiUrlProps: string;
   @Input('titleFilter') titleFilterProps: string;
   @Input('authorFilter') authorFilterProps: string;
-
+  
+  currentUserId$: Observable<string>;
   isLoggedIn$: Observable<boolean>;
   isLoading$: Observable<boolean>;
   error$: Observable<BackEndErrors | null>;
@@ -45,7 +47,8 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
   constructor(
     private store: Store,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private bookService: BookService
   ) {}
   ngOnDestroy(): void {
     this.queryParamsSubscribtion.unsubscribe();
@@ -108,6 +111,7 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
     );
   }
   initializeValues() {
+    this.currentUserId$ = this.store.pipe(select(currentUserIdSelector), tap(()=>console.log));
     this.count$ = this.store.pipe(select(booksCountSelector));
     this.isLoading$ = this.store.pipe(select(isLoadingSelector));
     this.isLoggedIn$ = this.store.pipe(select(IsLoggedInSelector));
@@ -116,9 +120,7 @@ export class BooksComponent implements OnInit, OnChanges, OnDestroy {
     this.baseUrl = this.router.url.split('?')[0];
   }
   getImage(base64stringImage: any): string {
-    const imgSrc = `data:image/png;base64,${base64stringImage}`;
-    //console.log("getImage", imgSrc)
-    return imgSrc;
+     return this.bookService.getImage(base64stringImage);
   }
   onFiltersChanged(){
     this.currentPage = 1;

@@ -15,7 +15,7 @@ const initialState: BooksState = {
   count: null,
 };
 
-export const bookReducer = createReducer(
+export const booksReducer = createReducer(
   initialState,
   on(
     getBooksAction,
@@ -42,5 +42,5 @@ export const bookReducer = createReducer(
       errors: action.errors,
     })
   ),
-  on(routerNavigationAction, (): BooksState => initialState)
+  on(routerNavigationAction, (state): BooksState => state = initialState)
 );

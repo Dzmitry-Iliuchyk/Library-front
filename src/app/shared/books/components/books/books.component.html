@@ -16,9 +16,9 @@
             />
           </div>
           <div class="col-md-7">
-            <div class="card-body">
-              <h5 class="card-title">{{book.title}}</h5>
-              <p class="card-text truncate" >
+            <div class="card-body ">
+              <h5 class="card-title truncate title-my"><a [routerLink]="['/details',book.id]">{{book.title}}</a></h5>
+              <p class="card-text truncate description-my" >
                 {{book.description}}
               </p>
               <p class="card-text">
@@ -28,7 +28,7 @@
           </div>
           <div class="col-md-2">
             <div class="card-body">
-              <button *ngIf="isLoggedIn$|async" [disabled]="book.isTaken" class="btn btn-primary">{{book.isTaken?"Нет в наличии":"Взять"}}</button>
+              <p >{{book.isTaken?"Нет в наличии":"В наличии"}}</p>
             </div>
           </div>
         </div>
@@ -42,7 +42,7 @@
     [currentPage]="currentPage"
   ></lib-pagination>
 </div>
-<div class="row justify-content-md-center" *ngIf="!(count$|async)">
+<div class="row justify-content-md-center" *ngIf="(!(count$|async)&&!(isLoading$|async))">
   <div class="col-md-6">
     <p>
       К сожалению, по вашему запросу ничего не найдено!

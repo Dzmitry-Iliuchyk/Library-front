@@ -1,1 +1,81 @@
-<p>details-book works!</p>
+<div class="bg-light p-5 mb-4">
+  <div class="container">
+    <h1 class="display-4">{{ book.title }}</h1>
+    <div class="row">
+      <p class="lead col-md-4">
+        Автор: {{ book.firstName }} {{ book.lastName }}
+      </p>
+      <div class="col-md-2">
+        <div *ngIf="isLoggedIn$|async">
+          <p
+            class="btn btn-sm btn-primary"
+            *ngIf="book.isTaken && !(isOwner$ | async)"
+          >
+            Нет в наличии
+          </p>
+          <take-free-book
+            [bookId]="book.id"
+            [isTaken]="book.isTaken"
+            *ngIf="(isOwner$|async) || (!book.isTaken)"
+          ></take-free-book>
+        </div>
+      </div>
+      <div class="col-md-2">
+        <p>Genre: {{ book.genre }}</p>
+      </div>
+      <div class="col-md-4">
+        <div *ngIf="IsAdmin$ | async">
+          <a class="btn btn-sm btn-outline-primary" [routerLink]="['/edit']"
+            >Редактировать</a
+          >
+          <button
+            type="button"
+            class="btn btn-sm btn-outline-danger"
+            data-bs-toggle="modal"
+            data-bs-target="#deleteModal"
+          >
+            Удалить
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-lg">
+  <div class="row">
+    <div class="col-md-12">
+      <p>{{ book.description }}</p>
+    </div>
+  </div>
+</div>
+
+<div
+  class="modal fade"
+  id="deleteModal"
+  tabindex="-1"
+  aria-labelledby="deleteModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Удаление</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">Вы действительно хотите удалить эту книгу?</div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Нет
+        </button>
+        <button type="button" class="btn btn-danger" (click)="deleteBook()">
+          Удалить
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

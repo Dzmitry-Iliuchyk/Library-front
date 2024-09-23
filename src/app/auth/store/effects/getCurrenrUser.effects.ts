@@ -16,15 +16,13 @@ export class GetCurrentUserEffect {
     this.action$.pipe(
       ofType(getCurrentUserAction),
       switchMap(() => {
-        const guid = this.jwt.getUserId();
-        console.log("GetCurrentUserEffect",guid)
-        if (guid == null) return of(getCurrentUserFailureAction());
-        return this.authService.getCurrentUser(guid).pipe(
+
+        return this.authService.getCurrentUser().pipe(
           map((currentUser: CurrentUser) => {
             return getCurrentUserSuccessAction({ currentUser });
           }),
           catchError((a:any) => {
-            console.error(a)
+            console.error("GetCurrentUserEffect",a)
             return of(getCurrentUserFailureAction());
           })
         );
@@ -35,6 +33,5 @@ export class GetCurrentUserEffect {
   constructor(
     private action$: Actions,
     private authService: AuthService,
-    private jwt: JwtService
   ) {}
 }
