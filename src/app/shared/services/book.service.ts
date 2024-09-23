@@ -3,6 +3,8 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Book } from '../books/types/booksResponce';
 import { environment } from '../../../environments/environment';
+import { BookInput } from '../types/BookInput.interface';
+import { BookUpdateRequest } from '../types/BookUpdateRequest';
 
 @Injectable()
 export class BookService {
@@ -12,6 +14,17 @@ export class BookService {
     return imgSrc;
   }
 
+  createBook(formData: FormData): Observable<any>{
+    const apiUrl: string = environment.apiURL + `/Book/Create`; 
+    return this.http.post<Book>(apiUrl, formData,{withCredentials: true});
+  }
+  editBook(guid : string,  formData: FormData): Observable<any>{
+
+    formData.append("bookId", guid);
+    console.log("editBookService",guid , formData)
+    const apiUrl: string = environment.apiURL + `/Book/Update`; 
+    return this.http.put<Book>(apiUrl, formData,{withCredentials: true});
+  }
   getBook(guid : string): Observable<Book>{
     const apiUrl: string = environment.apiURL + `/Book/${guid}/GetById`; 
     return this.http.get<Book>(apiUrl,{withCredentials: true});

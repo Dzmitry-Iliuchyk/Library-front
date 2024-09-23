@@ -3,6 +3,9 @@ import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { CurrentUser } from '../../shared/types/CurrentUser.interface';
 import { CurrentUserSelector, isAdminSelector, IsAnonymousSelector, IsLoggedInSelector } from '../../auth/store/selectors';
+import { logOutAction } from '../../auth/store/actions/logOut.action';
+import { CookieService } from 'ngx-cookie-service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'lib-top-bar',
@@ -15,7 +18,7 @@ export class TopBarComponent implements OnInit {
   isAdmin$: Observable<boolean>;
   currentUser$: Observable<CurrentUser | null>;
 
-  constructor(private store: Store) {}
+  constructor(private store: Store, private cookie: CookieService) {}
   ngOnInit(): void {
     this.isLoggedIn$ = this.store.pipe(select(IsLoggedInSelector));
     this.isAnonymous$ = this.store.pipe(select(IsAnonymousSelector));
@@ -24,4 +27,10 @@ export class TopBarComponent implements OnInit {
       select(CurrentUserSelector)
     );
   }
+
+  onClick():void{
+    console.log("Logout")
+    this.cookie.deleteAll();
+    window.location.reload();
+    }
 }

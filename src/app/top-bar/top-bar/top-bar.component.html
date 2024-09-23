@@ -5,15 +5,16 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <!-- <ul class="navbar-nav me-auto">
-                <li class="nav-item">
+            <ul class="navbar-nav me-auto">
+                <!-- <li class="nav-item">
                     <a class="nav-link active" [routerLink]="['/']" aria-current="page" href="#">Главная</a>
-                </li>
-            </ul> -->
-            <ul class="navbar-nav ms-auto">
+                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link" *ngIf="isLoggedIn$|async" [routerLink]="['/myBooks']">Мои книги</a>
+                    <a class="nav-link" *ngIf="isAdmin$|async" [routerLink]="['/create']">Создать книгу</a>
                 </li>
+            </ul>
+            <ul class="navbar-nav ms-auto">
+                
                 <li class="nav-item">
                     <a class="nav-link" *ngIf="isAnonymous$|async"  [routerLink]="['/register']">Регистрация</a>
                 </li>
@@ -21,7 +22,7 @@
                     <a class="nav-link" *ngIf="isAnonymous$|async"  [routerLink]="['/login']">Вход</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" *ngIf="isLoggedIn$|async"  [routerLink]="['/','profile']">Профиль</a>
+                    <button (click)="onClick()" class="nav-link" *ngIf="isLoggedIn$|async" >Выход</button>
                 </li>
             </ul>
         </div>

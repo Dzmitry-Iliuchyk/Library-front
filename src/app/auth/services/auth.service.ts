@@ -29,7 +29,7 @@ export class AuthService {
 
   logout(): Observable<any> {
     const url = environment.apiURL + '/User/Logout';
-    return this.http.post<any>(url, {}, { withCredentials: true });
+    return this.http.post<any>(url, null, { withCredentials: true });
   }
 
   getCurrentUser(): Observable<CurrentUser> {

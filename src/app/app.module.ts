@@ -13,6 +13,7 @@ import { RegisterEffect } from './auth/store/effects/register.effect';
 import { BodyModule } from './body/body.module';
 import { UserBooksModule } from './user-books/user-books.module';
 import { BookModule } from './shared/book/book.module';
+import { EditBookModule } from './edit-book/edit-book.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,6 +36,7 @@ import { BookModule } from './shared/book/book.module';
     BodyModule,
     UserBooksModule,
     BookModule,
+    EditBookModule,
     StoreRouterConnectingModule.forRoot(),
   ],
 

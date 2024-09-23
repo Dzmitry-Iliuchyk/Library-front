@@ -1,0 +1,74 @@
+<div class="container page">
+    <div class="row">
+      <div class="col-md-10 offset-md-1 col-xs-12">
+        <Lib-backend-errors *ngIf="errorsProps" [BackendErrors]="errorsProps"></Lib-backend-errors>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <fieldset>
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                placeholder="Book title"
+                formControlName="title"
+              />
+            </div>
+            <div class="mb-3">
+                <input
+                  type="text"
+                  class="form-control form-control-lg"
+                  placeholder="Book ISBN"
+                  formControlName="isbn"
+                />
+              </div>
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                placeholder="What is this book genre?"
+                formControlName="genre"
+              />
+            </div>
+  
+            <div class="mb-3">
+              <textarea
+                type="text"
+                rows="8"
+                class="form-control form-control-lg"
+                placeholder="What is this book about?"
+                formControlName="description"
+              ></textarea>
+            </div>
+  
+            <div class="mb-3">
+              <input
+                type="text"
+                class="form-control form-control-lg"
+                placeholder="Enter author id"
+                formControlName="authorId"
+              />
+            </div>
+            <div class="mb-3">
+                <input
+                  type="file"
+                  accept="image/jpeg, image/png"
+                  class="form-control form-control-lg"
+                  formControlName="image"
+                  (change)="onFileSelected($event)"
+                  [(ngModel)]="selectedFile"
+                />
+              </div>
+  
+            <div>
+              <button
+                type="submit"
+                class="btn btn-lg btn-primary float-end"
+                [disabled]="form.invalid || isSubmittingProps"
+              >
+                Submit
+              </button>
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </div>

@@ -25,7 +25,7 @@
       </div>
       <div class="col-md-4">
         <div *ngIf="IsAdmin$ | async">
-          <a class="btn btn-sm btn-outline-primary" [routerLink]="['/edit']"
+          <a class="btn btn-sm btn-outline-primary" [routerLink]="['/edit', book.id]"
             >Редактировать</a
           >
           <button

@@ -1,0 +1,6 @@
+<lib-book-form
+  [errors]="backEndErrors$ | async"
+  [initialValues]="initialValues$ | async"
+  [isSubmitting]="isSubmitting$ | async"
+  (bookSubmit)="onSubmit($event)"
+></lib-book-form>
