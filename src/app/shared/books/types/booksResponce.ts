@@ -1,6 +1,6 @@
 export interface BooksResponse {
   books: Book[];
-  count: number;
+  total: number;
 }
 export interface Book {
   id: string;

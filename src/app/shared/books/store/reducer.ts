@@ -31,7 +31,7 @@ export const booksReducer = createReducer(
       ...state,
       isLoading: false,
       books: action.books.books,
-      count: action.books.count,
+      count: action.books.total,
     })
   ),
   on(
