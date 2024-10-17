@@ -46,6 +46,7 @@ export class DetailsBookComponent implements OnDestroy, OnInit {
       this.store.pipe(select(currentUserIdSelector)),
     ]).pipe(
       map(([book, currentUserId]: [Book | null, string | null]) => {
+        console.log( "clientId",book.clientId , "Currentuser" ,currentUserId)
         if (!book || !currentUserId) {
           return false;
         } else if (book.clientId === currentUserId) {

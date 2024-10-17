@@ -36,5 +36,5 @@ export const isAdminSelector = createSelector(
 
 export const currentUserIdSelector = createSelector(
   authFeatureSelector,
-  (authState: AuthState) => authState.currentUser.guid
+  (authState: AuthState) => authState.currentUser.id
 );

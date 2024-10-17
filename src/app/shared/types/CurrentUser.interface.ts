@@ -1,5 +1,5 @@
 export interface CurrentUser {
-  guid: string;
+  id: string;
   name: string;
   email: string;
   isAdmin: boolean;
